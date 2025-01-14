@@ -2,12 +2,12 @@
 
 The goal of this project is to develop a computer vision game for children. The game must be as simple as possible, utilizing the OpenCV and NumPy libraries. The project aims to introduce machine learning concepts to kids and students through games and interactive learning tutorials.
 
----
+
 
 ## Game Demo
 ![This is the pipeline overview](Documentation/demo.gif)
 
----
+
 
 ## Overview
 
@@ -25,7 +25,7 @@ The project is divided into several parts:
 
 ![This is the pipeline overview](Documentation/flow_diagram.svg)
 
----
+
 
 ## Program Files 
 
@@ -36,7 +36,7 @@ The project is divided into several parts:
 5. **`detect.py`**: Features for face and eye detection.  
 6. **`init.py`**: Contains initializations required at program startup.
 
----
+
 
 ## Classes
 
@@ -48,7 +48,7 @@ The project is divided into several parts:
 - **`LASER`**: Manages the mask, resizing, and coordinates of the two lasers.  
 - **`EXPLOSION`**: Manages the mask, resizing, and coordinates of the explosion.
 
----
+
 
 ## Functions
 
@@ -63,14 +63,14 @@ The project is divided into several parts:
 - **`reset_variables`**: Resets game time and variables after a game.  
 - **`eyes_detection`**: Detects eyes and retrieves their coordinates.
 
----
+
 
 ## Contributors
 - Francisco Perdigon Romero [LinkedIn](https://www.linkedin.com/in/fperdigon/) | [Github](https://github.com/fperdigon)
 - Pierre Thibault [LinkedIn](https://www.linkedin.com/in/pierre-thibault-089b60a/)
 - Marie Nashed [LinkedIn](https://www.linkedin.com/in/julien-reguigne-0b2aa3129/) | [Github](https://github.com/JulieenR)
 
----
+
 
 ## License
 
