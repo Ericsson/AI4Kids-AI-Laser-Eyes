@@ -68,7 +68,7 @@ The project is divided into several parts:
 ## Contributors
 - Francisco Perdigon Romero [LinkedIn](https://www.linkedin.com/in/fperdigon/) | [Github](https://github.com/fperdigon)
 - Pierre Thibault [LinkedIn](https://www.linkedin.com/in/pierre-thibault-089b60a/)
-- Marie Nashed [LinkedIn](https://www.linkedin.com/in/julien-reguigne-0b2aa3129/) | [Github](https://github.com/JulieenR)
+- Julien Reguigne [LinkedIn](https://www.linkedin.com/in/julien-reguigne-0b2aa3129/) | [Github](https://github.com/JulieenR)
 
 
 
