@@ -37,10 +37,12 @@ jobs:
 
       - name: Define Executable Name
         run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV  # Set the variable
+        shell: bash 
       
       - name: Rename Windows Binary
         if: matrix.os == 'windows-latest'
         run: mv dist/${{ env.EXE_NAME }}.exe dist/${{ env.EXE_NAME }}-windows.exe  
+        shell: bash 
 
       - name: Rename Linux Binary
         if: matrix.os == 'ubuntu-latest'
@@ -56,6 +58,8 @@ jobs:
         with:
           name: windows-binary
           path: dist/${{ env.EXE_NAME }}-windows.exe
+        shell: bash 
+        
 
       - name: Upload Artifact (Linux)
         if: matrix.os == 'ubuntu-latest'
