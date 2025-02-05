@@ -15,7 +15,7 @@ def load_files():
 
 
 def init_video_capture():
-    video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    video_capture = cv2.VideoCapture(0)
     if not video_capture.isOpened():
         exit('The Camera is not opened')
     return video_capture
