@@ -58,7 +58,6 @@ jobs:
         with:
           name: windows-binary
           path: dist/${{ env.EXE_NAME }}-windows.exe
-        shell: bash 
         
 
       - name: Upload Artifact (Linux)
