@@ -1,7 +1,6 @@
 name: Build PyInstaller Executable
 
 on:
-  workflow_dispatch:  # Allows manual triggering
   push:
    branches:
      - main
@@ -28,60 +27,52 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pyinstaller      
+          pip install pyinstaller
 
       - name: Build executable
         run: |
           pyinstaller pyinstaller_recipe.spec
         shell: bash  # Needed for Windows compatibility
-
-      - name: Define Executable Name
-        run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV  # Set the variable
-        shell: bash 
       
       - name: Rename Windows Binary
         if: matrix.os == 'windows-latest'
-        run: mv dist/${{ env.EXE_NAME }}.exe dist/${{ env.EXE_NAME }}-windows.exe  
-        shell: bash 
+        run: mv dist/AI4Kids-Laser-Eyes.exe dist/AI4Kids-Laser-Eyes-windows.exe  
 
       - name: Rename Linux Binary
         if: matrix.os == 'ubuntu-latest'
-        run: mv dist/${{ env.EXE_NAME }} dist/${{ env.EXE_NAME }}-linux.bin  
+        run: mv dist/AI4Kids-Laser-Eyes dist/AI4Kids-Laser-Eyes-linux.bin  
       
       - name: Rename macOS Binary
         if: matrix.os == 'macos-latest'
-        run: mv dist/${{ env.EXE_NAME }} dist/${{ env.EXE_NAME }}-macos.bin
+        run: mv dist/AI4Kids-Laser-Eyes dist/AI4Kids-Laser-Eyes-macos.bin
 
       - name: Upload Artifact (Windows)
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
           name: windows-binary
-          path: dist/${{ env.EXE_NAME }}-windows.exe
-        
+          path: dist/AI4Kids-Laser-Eyes-windows.exe
 
       - name: Upload Artifact (Linux)
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
           name: linux-binary
-          path: dist/${{ env.EXE_NAME }}-linux.bin
+          path: dist/AI4Kids-Laser-Eyes.bin
 
       - name: Upload Artifact (macOS)
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v4
         with:
           name: macos-binary
-          path: dist/${{ env.EXE_NAME }}-macos.bin  # Upload renamed macOS binary
+          path: dist/AI4Kids-Laser-Eyes-macos.bin  # Upload renamed macOS binary
 
   release:
     needs: build  # Waits for the build job to finish
+    #if: github.event_name == 'release'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Define Executable Name
-        run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV  # Set the variable
-
       - name: Download Windows binary
         uses: actions/download-artifact@v4
         with:
@@ -104,15 +95,15 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/${{ env.EXE_NAME }}-windows.exe
-            dist/${{ env.EXE_NAME }}-linux.bin
-            dist/${{ env.EXE_NAME }}-macos.bin
+            dist/AI4Kids-Laser-Eyes-windows.exe
+            dist/AI4Kids-Laser-Eyes-linux.bin
+            dist/AI4Kids-Laser-Eyes-macos.bin
 
       - name: Upload "Latest" Build
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           files: |
-            dist/${{ env.EXE_NAME }}-windows.exe
-            dist/${{ env.EXE_NAME }}-linux.bin
-            dist/${{ env.EXE_NAME }}-macos.bin
+            dist/AI4Kids-Laser-Eyes-windows.exe
+            dist/AI4Kids-Laser-Eyes-linux.bin
+            dist/AI4Kids-Laser-Eyes-macos.bin
