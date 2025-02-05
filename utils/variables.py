@@ -1,20 +1,31 @@
 import cv2
 import random
 import time
+import sys
+import os
 from utils.gui import applying_mask
 
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.normpath(os.path.join(base_path, relative_path))
 
 class FILES(object):
     """
     This class contains all the hardcoded paths.
     """
-    laser_left_path = 'images/laser_left.png'
-    laser_right_path = 'images/laser_right.png'
-    explosion_path = 'images/explosion.png'
-    bottle_path = 'images/bottle.png'
-    smiley_path = 'images/smiley.png'
-    face_cascade_path = 'haarcascade_xml_files/haarcascade_frontalface_default.xml'
-    eye_cascade_path = 'haarcascade_xml_files/haarcascade_eye_tree_eyeglasses.xml'
+    laser_left_path = resource_path('images/laser_left.png')
+    laser_right_path = resource_path('images/laser_right.png')
+    explosion_path = resource_path('images/explosion.png')
+    bottle_path = resource_path('images/bottle.png')
+    smiley_path = resource_path('images/smiley.png')
+    face_cascade_path = resource_path('haarcascade_xml_files/haarcascade_frontalface_default.xml')
+    eye_cascade_path = resource_path('haarcascade_xml_files/haarcascade_eye_tree_eyeglasses.xml')
 
 
 class FLAGS(object):
