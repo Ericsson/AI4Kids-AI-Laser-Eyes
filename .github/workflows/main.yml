@@ -3,10 +3,10 @@ name: Build PyInstaller Executable
 on:
   workflow_dispatch:  # Allows manual triggering
   push:
-   branches:
-     - main
+    branches:
+      - main
   release:
-    types: [created]
+    types: [created]  # Runs when a new release is created
 
 jobs:
   build:
@@ -30,15 +30,14 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller      
 
-      - name: Build executable
-        run: |
-          pyinstaller pyinstaller_recipe.spec
-        shell: bash  # Needed for Windows compatibility
-
-      - name: Define Executable Name
-        run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV  # Set the variable
+      - name: Set Executable Name
+        run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV
         shell: bash 
-      
+
+      - name: Build executable
+        run: pyinstaller pyinstaller_recipe.spec
+        shell: bash  
+
       - name: Rename Windows Binary
         if: matrix.os == 'windows-latest'
         run: mv dist/${{ env.EXE_NAME }}.exe dist/${{ env.EXE_NAME }}-windows.exe  
@@ -58,7 +57,6 @@ jobs:
         with:
           name: windows-binary
           path: dist/${{ env.EXE_NAME }}-windows.exe
-        
 
       - name: Upload Artifact (Linux)
         if: matrix.os == 'ubuntu-latest'
@@ -72,15 +70,20 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos-binary
-          path: dist/${{ env.EXE_NAME }}-macos.bin  # Upload renamed macOS binary
+          path: dist/${{ env.EXE_NAME }}-macos.bin 
 
   release:
-    needs: build  # Waits for the build job to finish
+    needs: build  # Only runs after build job completes
+    if: github.event_name == 'release'  # Only trigger on tagged releases
     runs-on: ubuntu-latest
 
     steps:
-      - name: Define Executable Name
-        run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV  # Set the variable
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Executable Name
+        run: echo "EXE_NAME=AI4Kids-Laser-Eyes" >> $GITHUB_ENV
+        shell: bash 
 
       - name: Download Windows binary
         uses: actions/download-artifact@v4
@@ -100,7 +103,7 @@ jobs:
           name: macos-binary
           path: dist/
 
-      - name: Upload Release Asset
+      - name: Upload Release Asset (Tagged Version)
         uses: softprops/action-gh-release@v2
         with:
           files: |
@@ -108,9 +111,9 @@ jobs:
             dist/${{ env.EXE_NAME }}-linux.bin
             dist/${{ env.EXE_NAME }}-macos.bin
 
-      - name: Upload "Latest" Build
-        uses: softprops/action-gh-release@v2
+      - name: Upload "Latest" Build (Only for main branch)
         if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           files: |
