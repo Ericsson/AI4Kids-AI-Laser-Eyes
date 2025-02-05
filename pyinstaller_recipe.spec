@@ -11,9 +11,9 @@
 block_cipher = None
 
 # Importing shared libraries
-import sysconfig
-import os
-python_lib = os.path.join(sysconfig.get_config_var('LIBDIR'), sysconfig.get_config_var('INSTSONAME'))
+#import sysconfig
+#import os
+#python_lib = os.path.join(sysconfig.get_config_var('LIBDIR'), sysconfig.get_config_var('INSTSONAME'))
 
 def get_mediapipe_path():
     import mediapipe
@@ -23,7 +23,8 @@ def get_mediapipe_path():
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=[(python_lib, '.')],
+    #binaries=[(python_lib, '.')],
+    binaries=[],
     datas=[('utils', 'utils'), ('images', 'images'), ('haarcascade_xml_files', 'haarcascade_xml_files')],
     #hiddenimports=['sklearn.ensemble._forest'],
     hookspath=[],
