@@ -74,7 +74,6 @@ jobs:
 
   release:
     needs: build  # Only runs after build job completes
-    if: github.event_name == 'release'  # Only trigger on tagged releases
     runs-on: ubuntu-latest
 
     steps:
@@ -104,6 +103,7 @@ jobs:
           path: dist/
 
       - name: Upload Release Asset (Tagged Version)
+        if: github.event_name == 'release'  # Only trigger on tagged releases
         uses: softprops/action-gh-release@v2
         with:
           files: |
